@@ -79,6 +79,9 @@ h1{font-size:30px;font-weight:700;margin:0;color:#33223e;font-family:var(--hand)
 @keyframes popb{0%{opacity:0;transform:translateY(11px) scale(.9)}70%{transform:translateY(-2px) scale(1.03)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes burst{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1.1) rotate(var(--rt));opacity:0}}
 .conf{position:fixed;top:42%;left:50%;pointer-events:none;animation:burst .95s ease-out forwards;z-index:60}
+.rvw{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.rvw.open{-webkit-line-clamp:9999;overflow:visible}
+.moreBtn{display:none;margin-top:2px;background:none;border:none;padding:0;color:#D6347E;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--ui)}
 </style>
 </head>
 <body>
@@ -106,7 +109,7 @@ const T={
  FBSR:{n:"정통 대장",t:"검증된 희소 SUV의 로망",s:"캠핑 한 번 가겠다고 풀옵션 SUV 지름",g:["디스커버리","익스플로러","레인지로버"],b:"모델3",q:"년식 좀 됐어도, 단점보다 장점이 많은 차",c:{blk:"amber",body:"suv",outfit:"#6B5B3E",glasses:"none",head:false,expr:"serious"}},
  FBNM:{n:"프리미엄 트렌드세터",t:"신상 프리미엄 패밀리",s:"신상 패밀리는 다 내 거, 할부도 다 내 거",g:["팰리세이드(신형)","EV9","GV70"],b:"머스탱",q:"연비 빼고 단점 없는 팰리세이드입니다",c:{blk:"amber",body:"suv",outfit:"#D98C3A",glasses:"none",head:true,expr:"smile"}},
  FBNR:{n:"장비병 끝판왕",t:"가족용이라 쓰고 내 로망이라 읽는다",s:"가족용이라 우기지만 사실 본인 로망",g:["디펜더","카이엔","EV9"],b:"아반떼",q:"넓은데 짧아서 시내주행 편하고, 무엇보다 유니크함",c:{blk:"amber",body:"suv",outfit:"#5A6B5A",glasses:"none",head:false,expr:"happy"}},
- DVSM:{n:"가성비 드라이버",t:"알뜰한데 운전은 진심",s:"월급은 적은데 코너 도는 건 진심",g:["아반떼","K5","3시리즈"],b:"디펜더",q:"최고 판매량답게 부품 수급 잘 되고 수리비 저렴, 그랜저에 굴하지 않는 실내",c:{blk:"blue",body:"sedan",outfit:"#4A6FA5",glasses:"none",head:false,expr:"serious"}},
+ DVSM:{n:"우리동네 레이서",t:"알뜰한데 운전은 진심",s:"동네 한 바퀴도 드라이빙 코스로 만드는 사람",g:["아반떼","K5","3시리즈"],b:"디펜더",q:"최고 판매량답게 부품 수급 잘 되고 수리비 저렴, 그랜저에 굴하지 않는 실내",c:{blk:"blue",body:"sedan",outfit:"#4A6FA5",glasses:"none",head:false,expr:"serious"}},
  DVSR:{n:"추억의 낭만러",t:"감성에 돈 쓰는 사람",s:"감성에 돈 쓰고, 정비소에 더 씀",g:["머스탱","카마로","벨로스터"],b:"팰리세이드",q:"감성과 비례한 유류비ㅎㅎ… 그래도 우렁찬 배기음은 못 잃어",c:{blk:"blue",body:"sports",outfit:"#2E3138",glasses:"cool",head:false,expr:"cool"}},
  DVNM:{n:"영리한 신상러",t:"신차를 제일 싸게",s:"남들 다 아는 신차를 제일 싸게 사는 기술자",g:["모델3","K5","아반떼 N라인"],b:"디스커버리",q:"좁은 것 빼면 단점은 단 1도 없어요",c:{blk:"blue",body:"sedan",outfit:"#5A7AA8",glasses:"none",head:false,expr:"smile"}},
  DVNR:{n:"펀카 발굴러",t:"남들 안 보는 펀카만",s:"남들 안 쳐다보는 펀카만 골라 사는 청개구리",g:["스팅어","폴스타","미니"],b:"GV80",q:"국산차 같지 않은 외모에 스포츠 세단 이미지, 주행감도 좋다",c:{blk:"blue",body:"sports",outfit:"#3A6EA5",glasses:"none",head:false,expr:"wink"}},
@@ -280,7 +283,7 @@ function landing(){
   +'</div>'
   +'<div style="text-align:center;margin:24px 0 22px"><span class="badge">📊 실제 차주 55만 명 데이터 기반</span></div>'
   +'<div class="ctawrap" style="display:flex;gap:9px;align-items:stretch">'
-  +'<button class="cta glowcta" style="flex:1" onclick="start()">🚗 테스트 시작하기 →</button>'
+  +'<button class="cta glowcta" style="flex:1" onclick="start()">🚗 시작하기 →</button>'
   +'<button onclick="shareInvite()" aria-label="공유하기" style="flex-shrink:0;width:62px;border:none;background:#FF85B8;color:#7a2752;font-family:var(--uiB);font-weight:700;cursor:pointer;border-bottom:6px dashed #D6347E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.05"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4V15"/><path d="M8 8l4-4 4 4"/><path d="M8 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2"/></svg><span style="font-size:12px">공유</span></button>'
   +'</div>'
   +'<p class="sub" style="text-align:center;font-size:12px;margin:12px 0 0">이미 12,840명이 자기 차BTI를 찾았어요</p>';
@@ -291,6 +294,7 @@ function question(){
  var x=QUESTIONS[i];
  var pr='<div class="prog">';for(var k=0;k<8;k++)pr+='<i class="'+(k<=i?'on':'')+'"></i>';pr+='</div>';
  app.innerHTML=pr
+ +(i>0?'<button onclick="back()" style="background:none;border:none;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--jua);padding:2px 6px 4px 0">← 이전 질문</button>':'')
  +'<p style="text-align:center;font-size:16px;font-weight:700;color:var(--pink);margin:0 0 4px;font-family:var(--hand)">Q'+(i+1)+' / 8</p>'
  +'<h1 style="font-size:19px;line-height:1.55;margin:0 0 4px;text-align:center;font-family:var(--ui);font-weight:500">'+x.q+'</h1>'
  +'<div style="text-align:center;font-size:22px;margin:2px 0 4px">✨</div>'
@@ -298,6 +302,35 @@ function question(){
  +'<button class="opt'+(i%2?'':' g')+'" onclick="pick(\'b\')">'+x.b[0]+'</button>';
 }
 function pick(k){var qi=i,o=QUESTIONS[qi][k];track('answer',{q:qi+1,choice:k,axis:o[1],text:o[0]});confetti(10);ans.push(k);i++;i<8?question():loading();}
+function back(){if(i<=0)return;i--;ans.pop();question();}
+function drawRR(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function wrapLines(ctx,text,maxW){var w=text.split(' '),L=[],c='';for(var i=0;i<w.length;i++){var t=c?c+' '+w[i]:w[i];if(ctx.measureText(t).width>maxW&&c){L.push(c);c=w[i];}else c=t;}if(c)L.push(c);return L;}
+function shareOrDownload(blob,code){var nm='차BTI_'+((T[code]||{}).n||code)+'.png';var f=null;try{f=new File([blob],nm,{type:'image/png'});}catch(e){}
+ if(f&&navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){navigator.share({files:[f],text:'나의 차BTI 결과 🚗 너도 해봐!'}).catch(function(){});return;}
+ var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},5000);}
+function saveResultImage(){var code=score(),d=T[code],good=T[flip0(code)],foe=T[flipAll(code)];track('click',{text:'결과_이미지저장',code:code});
+ var raw=charSVG(code).replace(/<svg[^>]*>/,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230" width="720" height="517">');
+ var cimg=new Image();
+ var draw=function(){var W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;var ctx=cv.getContext('2d');
+  var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#FF7BC0');g.addColorStop(1,'#DE2E76');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(255,255,255,.12)';[[130,150,90],[960,120,120],[110,1200,80],[990,1230,70]].forEach(function(c){ctx.beginPath();ctx.arc(c[0],c[1],c[2],0,6.29);ctx.fill();});
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font='700 42px Jua, Pretendard, sans-serif';var bw=320,bh=74,bx=(W-bw)/2,by=64;ctx.fillStyle='#fff';drawRR(ctx,bx,by,bw,bh,37);ctx.fill();ctx.fillStyle='#E63A8C';ctx.fillText('나의 차BTI',W/2,by+bh/2+2);
+  var cw=760,ch=548,cx=(W-cw)/2,cy=170;ctx.fillStyle='#FFF6FB';drawRR(ctx,cx,cy,cw,ch,30);ctx.fill();
+  if(cimg.complete&&cimg.naturalWidth)ctx.drawImage(cimg,cx+(cw-720)/2,cy+15,720,517);
+  var yy=cy+ch+96;
+  ctx.font='700 92px Gaegu, Pretendard, sans-serif';ctx.lineJoin='round';ctx.lineWidth=10;ctx.strokeStyle='rgba(176,34,104,.92)';ctx.strokeText(d.n,W/2,yy);ctx.fillStyle='#fff';ctx.fillText(d.n,W/2,yy);
+  yy+=62;ctx.font='500 40px Pretendard, sans-serif';ctx.fillStyle='#ffe9f4';ctx.fillText('"'+d.t+'"',W/2,yy);
+  yy+=68;ctx.font='700 40px Jua, Pretendard, sans-serif';var hl=wrapLines(ctx,d.s,850);var boxH=36+hl.length*54;drawRR(ctx,90,yy,W-180,boxH,24);ctx.fillStyle='rgba(255,255,255,.16)';ctx.fill();ctx.fillStyle='#fff';var ty=yy+boxH/2-(hl.length-1)*27;hl.forEach(function(ln,idx){ctx.fillText((idx===0?'🔥 ':'')+ln,W/2,ty+idx*54);});
+  yy+=boxH+62;
+  ctx.font='700 36px Pretendard, sans-serif';ctx.fillStyle='#fff';ctx.fillText('🚗 잘 맞는 차  '+d.g.join(' · '),W/2,yy);
+  yy+=56;ctx.font='700 34px Pretendard, sans-serif';ctx.fillStyle='#ffe9f4';ctx.fillText('💚 환상궁합 '+good.n+'   💢 상극 '+foe.n,W/2,yy);
+  ctx.font='700 38px Jua, Pretendard, sans-serif';ctx.fillStyle='#fff';ctx.fillText('나도 내 차BTI 찾기 →',W/2,H-98);
+  ctx.font='700 32px Pretendard, sans-serif';ctx.fillStyle='#ffe9f4';ctx.fillText(location.host+location.pathname,W/2,H-50);
+  cv.toBlob(function(b){if(b)shareOrDownload(b,code);},'image/png');};
+ cimg.onload=function(){if(document.fonts&&document.fonts.ready){document.fonts.ready.then(draw);}else draw();};
+ cimg.onerror=function(){if(document.fonts&&document.fonts.ready){document.fonts.ready.then(draw);}else draw();};
+ cimg.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(raw);}
 function loading(){app.className='app';app.innerHTML='<div style="text-align:center;padding:50px 0"><div class="flo" style="font-size:44px">🚗</div><div class="spin"></div><p style="margin-top:18px;font-size:20px;font-weight:700;color:#D6347E;font-family:var(--hand)">너의 차BTI를 분석 중…</p></div>';var _c=score();track('complete',{code:_c,name:(T[_c]||{}).n||'',answers:ans.slice()});confetti(18);setTimeout(result,1150);}
 const CARDB={
  "스파크":{n:"스파크",b:"쉐보레",pr:650,y:2019,p:"https://image.heydealer.com/unsafe/2200x0/https://prnd-car-purchase.s3.ap-northeast-2.amazonaws.com/media/cars/carmediafile/2026/06/19/a1da9176-388a-4cfa-9d30-5c123d602535.jpeg",r:"차량을 끌고 나갈때 주차걱정을 안한다는점?... 이 작디작은 붕붕이 하나 주차자리 없겠냐며 끌고 다니는!",c:"경차 배기량이 있다 보니 오르막에서 힘이 약하고 저속에서 추월 할 때 가속이 충분히 되지 않는 점이 불편…"},
@@ -452,17 +485,21 @@ var CUR='', CUR_B=4;
 var BANDS=[[1,'1천만↓'],[2,'1~2천'],[3,'2~3천'],[4,'3~4천'],[5,'4~5천'],[6,'5천↑']];
 function mcard(m,bad){var c=CARDB[m];if(!c)return '';
  var price='<span style="color:#0F6E56;font-weight:600;font-size:12px">'+c.pr.toLocaleString()+'만원~</span>';
- var body=bad
-  ?'<div style="margin-top:1px">'+price+'</div>'+(c.c?'<div style="font-size:12px;color:#9c6b5e;line-height:1.4;margin-top:3px">"'+c.c+'"</div>':'<div style="font-size:11px;color:#b9b7b0;margin-top:2px">· 나랑은 좀…</div>')
-  :'<div style="margin-top:1px">'+price+'</div>'+(c.r?'<div style="font-size:12px;color:#5F5E5A;line-height:1.45;margin-top:3px;min-height:4.35em;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden">"'+c.r+'"</div>':'');
+ var txt=bad?(c.c||''):(c.r||'');
+ var body='<div style="margin-top:1px">'+price+'</div>';
+ if(txt){body+='<div class="rvw" style="font-size:12px;color:'+(bad?'#9c6b5e':'#5F5E5A')+';line-height:1.45;margin-top:3px">"'+txt+'"</div><button class="moreBtn" onclick="toggleMore(this)">더보기</button>';}
+ else if(bad){body+='<div style="font-size:11px;color:#b9b7b0;margin-top:2px">· 나랑은 좀…</div>';}
  return '<div class="lcard'+(bad?'':' rec')+'"'+(bad?' style="opacity:.92"':'')+'><img class="thumb" src="'+(c.p||CARSAMPLES[0])+'" loading="lazy" onerror="this.onerror=null;this.src=CARSAMPLES[0]" alt="'+c.n+'"><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">'+c.n+' <span style="color:#b9b7b0;font-weight:400;font-size:11px">'+c.b+'</span></div>'+body+'</div></div>';
 }
+function toggleMore(btn){var r=btn.previousElementSibling;if(!r)return;var op=r.classList.toggle('open');btn.textContent=op?'접기':'더보기';}
+function initMore(root){(root||document).querySelectorAll('.rvw').forEach(function(el){var b=el.nextElementSibling;if(!b||!b.classList.contains('moreBtn'))return;b.style.display=(el.classList.contains('open')||el.scrollHeight-el.clientHeight>1)?'inline-block':'none';});}
+function scheduleMore(root){initMore(root);try{if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){initMore(root);});}catch(e){}setTimeout(function(){initMore(root);},400);}
 function budgetBox(){var d=(REC[CUR]||{})[CUR_B]||{rec:[],anti:[]};
  return '<div style="display:flex;gap:5px;margin:6px 0 12px">'+BANDS.map(function(x){return '<button onclick="setBudget('+x[0]+')" style="flex:1;min-width:0;padding:8px 2px;border:2px solid '+(x[0]===CUR_B?'#5FA218':'#F0D0E2')+';background:'+(x[0]===CUR_B?'#C7EE7E':'#fff')+';color:'+(x[0]===CUR_B?'#34600d':'#a584a5')+';font-size:13px;font-weight:700;cursor:pointer;font-family:var(--jua);border-radius:0;box-shadow:'+(x[0]===CUR_B?'1px 1px 2px rgba(52,99,13,.30)':'2px 2px 3px rgba(120,50,90,.22)')+'">'+x[1]+'</button>';}).join('')+'</div>'
  +'<div class="sec">💚 나랑 잘 맞는 추천 모델</div>'+(d.rec.map(function(m){return mcard(m,false);}).join('')||'<p class="sub" style="font-size:12px">이 예산대 추천 준비 중</p>')
  +(d.anti.length?'<div class="sec">🙅 이건 좀 비추천</div>'+d.anti.map(function(m){return mcard(m,true);}).join(''):'');
 }
-function setBudget(b){CUR_B=b;track('budget',{band:b,code:CUR});var el=document.getElementById('carfit');if(el)el.innerHTML=budgetBox();}
+function setBudget(b){CUR_B=b;track('budget',{band:b,code:CUR});var el=document.getElementById('carfit');if(el){el.innerHTML=budgetBox();scheduleMore(el);}}
 const DESC={
  FVSM:"국민 가장은 나보다 식구가 먼저다. 튀는 걸 바라지 않고, 모두가 편한 무난함을 택한다. 큰 욕심 없이 안정적인 게 제일이라 믿는다. 검증된 길, 많이들 가는 길이 결국 옳다고 생각한다. 차도 사람도 '믿을 만한가'를 먼저 본다. 장점은 어떤 상황에서도 흔들리지 않는 든든함이다. 단점은 가끔 자기 자신을 뒤로 미룬다는 것. 화려함은 없어도 곁에 있으면 안심되는 사람이다. 요란한 약속보다 매일의 책임으로 증명한다. 평범함이 사실 제일 어렵다는 걸, 이 사람은 안다.",
  FVSR:"숨은 대형 헌터는 남들이 모르는 가치를 알아본다. 비싸지 않아도 크고 든든한 것에서 만족을 찾는다. 유행을 좇지 않고, 자기만의 기준으로 고른다. 가족을 다 태우고도 남는 공간에 마음이 놓인다. 남들이 '그걸 왜?' 해도 흔들리지 않는다. 장점은 실속과 안목을 동시에 갖췄다는 것. 단점은 그 진가를 알아주는 사람이 적어 외로울 때가 있다는 것. 검증된 큰 차 한 대에 오래 정 붙이는 사람이다. 요란하지 않게, 그러나 확실하게 자기 세계를 챙긴다. 알아주는 이 없어도, 본인은 이미 만족한다.",
@@ -472,7 +509,7 @@ const DESC={
  FBSR:"정통 대장은 로망을 현실로 끌고 온다. 흔한 프리미엄은 시시하고, 검증된 희귀템에 끌린다. SUV 한 대에 캠핑과 오프로드의 꿈을 싣는다. 남들 다 타는 건 재미없다고 생각한다. 장점은 묵직한 취향과 흔들리지 않는 신념. 단점은 유지비도 로망값이라며 합리화한다는 것. 거친 길도 두렵지 않은 든든함이 있다. 가족을 지키는 단단한 요새 같은 차를 원한다. 검증됐으면서 희소한, 그 둘 다를 포기 못 한다. 겉은 투박해도 속엔 낭만이 가득하다.",
  FBNM:"프리미엄 트렌드세터는 최신과 최고를 동시에 원한다. 신상 패밀리카는 다 그의 레이더 안에 있다. 가족도, 자기 자신도 좋은 걸 누려야 한다고 믿는다. 할부를 안고서라도 트렌드의 맨 앞에 선다. 장점은 시대의 흐름을 빠르게 읽는 감각. 단점은 욕심이 지갑보다 한발 앞선다는 것. 남들이 따라 사기 시작하면 이미 다음을 본다. 좋은 건 함께 누리자는 통 큰 마음이 있다. 패밀리카에도 멋과 신문물을 포기하지 않는다. 그에게 평범은 선택지에 없다.",
  FBNR:"장비병 끝판왕은 필요보다 로망으로 산다. 가족용이라 우기지만, 사실 본인이 제일 신났다. 루프탑 텐트, 드론, 최신 옵션까지 다 갖춰야 직성이 풀린다. 희귀하고 새롭고 비싼 것에 약하다. 장점은 무엇이든 끝까지 파고드는 열정. 단점은 그 열정이 종종 통장을 비운다는 것. 남들 안 가진 걸 가졌을 때 가장 행복하다. 가족이라는 명분과 자기 취향이 절묘하게 겹친다. 장비가 늘수록 삶이 풍요롭다 믿는 사람. 끝판왕이라는 말이 아깝지 않다.",
- DVSM:"가성비 드라이버는 돈은 없어도 운전엔 진심이다. 화려한 차 말고, 잘 굴러가고 모는 맛 있는 차를 원한다. 검증된 국민차로도 충분히 즐길 줄 안다. 코너 하나, 가속 한 번에 진심으로 설렌다. 장점은 적은 비용으로 최대의 재미를 뽑는 실력. 단점은 가끔 차에 쓰는 마음이 월급보다 앞선다는 것. 남들이 무난하다 부르는 차도 그의 손에선 펀카가 된다. 비싸지 않아도 운전의 본질을 아는 사람이다. 실속과 즐거움, 둘 다 놓치지 않는다. 핸들을 잡는 순간이 하루의 낙이다.",
+ DVSM:"우리동네 레이서는 비싼 차가 아니어도 운전엔 진심이다. 화려한 차 말고, 잘 굴러가고 모는 맛 있는 차를 원한다. 검증된 국민차로도 충분히 즐길 줄 안다. 코너 하나, 가속 한 번에 진심으로 설렌다. 장점은 적은 비용으로 최대의 재미를 뽑는 실력. 단점은 동네 한 바퀴도 드라이빙 코스로 만들다 약속에 늦는다는 것. 남들이 무난하다 부르는 차도 그의 손에선 펀카가 된다. 비싸지 않아도 운전의 본질을 아는 사람이다. 실속과 즐거움, 둘 다 놓치지 않는다. 핸들을 잡는 순간이 하루의 낙이다.",
  DVSR:"추억의 낭만러는 효율보다 감성에 투자한다. 남들 안 타는 올드카와 머슬카의 낭만을 안다. 비싸진 않아도 가슴 뛰는 소리에 지갑을 연다. 우렁찬 배기음 하나면 하루가 행복하다. 장점은 자기만의 취향을 끝까지 지키는 뚝심. 단점은 감성에 쓴 돈만큼 정비소에도 쓴다는 것. 남들의 '왜 그런 차를'이라는 말엔 미소만 짓는다. 추억과 낭만을 굴러가게 만드는 사람이다. 신상보다 사연 있는 차에 마음이 간다. 손해 보는 듯해도, 마음은 늘 부자다.",
  DVNM:"영리한 신상러는 새 차를 제일 똑똑하게 산다. 남들 다 아는 신차를, 남들보다 싸게 손에 넣는다. 정보를 모으고 타이밍을 재는 데 능하다. 신기술은 즐기되, 비용은 철저히 따진다. 장점은 트렌드와 합리성을 동시에 잡는 머리. 단점은 가끔 너무 계산적이라는 말을 듣는다는 것. 충동구매란 그의 사전에 없다. 새것의 설렘과 가성비의 안도를 함께 누린다. 똑똑하게 즐기는 게 진짜 잘 사는 거라 믿는다. 결국 가장 영리한 선택지에 도착한다.",
  DVNR:"펀카 발굴러는 남들이 안 보는 차를 발굴한다. 베스트셀러는 시시하고, 숨은 펀카에 설렌다. 비싸지 않아도 개성 있고 재밌으면 그만이다. 청개구리처럼 다수의 반대편에서 즐거움을 찾는다. 장점은 누구도 흉내 못 낼 독창적인 취향. 단점은 그 취향을 알아주는 사람이 드물다는 것. 남들과 똑같은 건 죽어도 싫다. 발굴의 재미가 운전의 재미만큼 크다. 비주류라는 말이 그에겐 칭찬이다. 자기만의 펀카로 자기만의 길을 간다.",
@@ -513,10 +550,14 @@ function result(){
  +'<div style="flex:1;background:#FAECE7;padding:10px;text-align:center"><div style="font-size:11px;color:#993C1D;margin-bottom:7px">상극 유형 💢</div><div class="flo" style="overflow:hidden;margin-bottom:7px;animation-delay:1.2s">'+charSVG(flipAll(code)).replace('viewBox="0 0 320 230"','viewBox="0 34 320 196"')+'</div><div style="font-size:14px;font-weight:700;color:#712B13;font-family:var(--jua)">'+foe.n+'</div><div style="font-size:11px;color:#a8466a;line-height:1.35;margin:3px 2px 0">"'+foe.s+'"</div><div style="font-size:11px;color:#b06a86;margin-top:4px">🚗 '+foe.g[0]+'</div></div>'
  +'</div>'
  +'<div style="height:14px"></div>'
- +'<button class="gbtn" style="margin:0 0 9px;background:#A6E04E;color:#2f5208;border-bottom:5px dashed #5FA218" onclick="share()"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="M12 4V15"/><path d="M8 8l4-4 4 4"/><path d="M8 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2"/></svg>친구에게 공유하기</button>'
- +'<button class="gbtn" style="margin:0 0 9px;background:#E7DBF7;color:#7B4FB5;border-bottom:5px dashed #B89AE0" onclick="track(\'click\',{text:\'결과_모든유형보기\',code:CUR});allTypes()">📖 16가지 모든 유형 보기</button>'
+ +'<div style="text-align:center;background:#FFF3D6;border:2px dashed #F0C040;border-radius:12px;padding:12px 14px;margin:0 0 10px;font-size:14px;font-weight:700;color:#8a5a00;font-family:var(--jua);line-height:1.55">🔍 내 친구들 중 누가 <span style="color:#D6347E">'+d.n+'</span>일까?<br>공유해서 나랑 찰떡인 사람 찾아보자!</div>'
+ +'<button class="gbtn" style="margin:0 0 9px;background:#FFD54A;color:#5a3d00;border-bottom:5px dashed #E0A800" onclick="share()"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="M12 4V15"/><path d="M8 8l4-4 4 4"/><path d="M8 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2"/></svg>친구에게 공유하기</button>'
+ +'<div style="display:flex;gap:9px;margin:0 0 9px;align-items:stretch">'
+ +'<button class="gbtn" style="flex:1;margin:0;font-size:14px;padding:12px 6px;line-height:1.25;background:#E7DBF7;color:#7B4FB5;border-bottom:5px dashed #B89AE0" onclick="track(\'click\',{text:\'결과_모든유형보기\',code:CUR});allTypes()">📖 16가지 모든 유형 보기</button>'
+ +'<button class="gbtn" style="flex:1;margin:0;font-size:14px;padding:12px 6px;line-height:1.25;background:#FFD7E8;color:#a32e63;border-bottom:5px dashed #F5A9CC" onclick="saveResultImage()">📸 결과 이미지 저장</button>'
+ +'</div>'
  +'<button class="gbtn" style="background:none;border:none;color:var(--mut);text-decoration:underline" onclick="track(\'click\',{text:\'결과_다시하기\',code:CUR});landing()">🔁 다시하기</button>';
- window.scrollTo(0,0);confetti(30);
+ window.scrollTo(0,0);confetti(30);scheduleMore(app);
 }
 function allTypes(){
  app.className='app fade';
@@ -533,6 +574,7 @@ function allTypes(){
    +'<div style="font-size:12px;color:var(--mut)">🙁 안 맞는 차 · '+d.b+'</div>'
    +'</div></div>';
  });
+ h+=(ans.length===8?'<button class="gbtn" style="margin-top:6px;background:#A6E04E;color:#2f5208;border-bottom:5px dashed #5FA218" onclick="result()">← 내 결과로 돌아가기</button>':'');
  h+='<button class="cta" style="margin-top:6px" onclick="start()">나도 테스트 하기</button>';
  app.innerHTML=h; window.scrollTo(0,0);
 }
